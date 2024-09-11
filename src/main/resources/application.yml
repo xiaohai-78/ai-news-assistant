@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: news-assistant
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: qwen2:latest
+          keep-alive: 60s
+          read-timeout: 60s
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: root
+    url: jdbc:mysql://localhost:3306/abc?characterEncoding=utf8&allowMultiQueries=true
+    username: root
+
+
+wx:
+  mp:
+    useRedis: false
+    redisConfig:
+      host: 127.0.0.1
+      port: 6379
+    configs:
+      - appId: wxd35893d33ff520e2
+        secret: 39edf97595c4f7a801f0ad1059898e58
+        token: Token
+        aesKey: QiqUFt92R5V1OdMOdKKOCdeUTwHhqkanpKKIFvlbhOW
