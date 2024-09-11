@@ -55,7 +55,7 @@ public class WxHelp {
 
     public static void main(String[] args) {
 //        System.out.println(getWxAccessToken());
-        getWxToken();
+//        getWxToken();
     }
 
 
@@ -201,8 +201,9 @@ public class WxHelp {
      * 获取微信token
      * @return
      */
-    public static String getWxToken(){
-        String response = OkHttpUtil.get("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxd35893d33ff520e2&secret=39edf97595c4f7a801f0ad1059898e58");
+    public String getWxToken(){
+        WxMpProperties.MpConfig mpConfig = wxMpProperties.getConfigs().get(0);
+        String response = OkHttpUtil.get("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + mpConfig.getAppId() + "&secret=" + mpConfig.getSecret());
         log.info(response);
         JSONObject everydayEngilsh = new JSONObject(response);
         String accessToken = everydayEngilsh.getStr("access_token");

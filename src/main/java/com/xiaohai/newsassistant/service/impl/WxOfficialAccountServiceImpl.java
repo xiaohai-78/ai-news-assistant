@@ -34,6 +34,7 @@ public class WxOfficialAccountServiceImpl implements NewsAssistantService {
 
     @Resource
     private CCTVNewsServiceImpl cctvNewsService;
+
     /**
      * 封面图片
      */
@@ -43,8 +44,8 @@ public class WxOfficialAccountServiceImpl implements NewsAssistantService {
     @Override
     public String execute() throws WxErrorException {
         // 判断能否正常请求公众号接口
-        if (WxHelp.getWxToken() == null){
-            throw new RuntimeException("公众号接口请求失败！请检查IP白名单配置,https://mp.weixin.qq.com/cgi-bin/safecenterstatus?action=view&t=setting/safe-index");
+        if (wxHelp.getWxToken() == null){
+            throw new RuntimeException("公众号接口请求失败！请检查IP白名单配置和secret配置,https://mp.weixin.qq.com/cgi-bin/safecenterstatus?action=view&t=setting/safe-index");
         }
 
         // 获取内容

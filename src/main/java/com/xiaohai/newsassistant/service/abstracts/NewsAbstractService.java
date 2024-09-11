@@ -41,7 +41,7 @@ public abstract class NewsAbstractService implements NewsService {
             responseJson = new JSONObject(response);
         } catch (JSONException exception){
             // 生成Json失败了就重新生成，最多试3次
-            log.error("生成Json格式错误");
+            log.error("生成Json格式错误,第{}次重试", retryTimes + 1);
             responseJson = getAiContent(chatModelEnum, originalNews, ++retryTimes);
         } catch (Exception e){
             log.error("ChatsinaAiNewsPojo error", e);
