@@ -23,7 +23,8 @@ wx:
       host: 127.0.0.1
       port: 6379
     configs:
+      ## https://mp.weixin.qq.com/advanced/advanced 设置与开发-基本配置 中获取
       - appId: wxd35893d33ff520e2
-        secret: 39edf97595c4f7a801f0ad1059898e58
+        secret: 42aaf0250cf1e7e9a29135fb60317d60
         token: Token
         aesKey: QiqUFt92R5V1OdMOdKKOCdeUTwHhqkanpKKIFvlbhOW

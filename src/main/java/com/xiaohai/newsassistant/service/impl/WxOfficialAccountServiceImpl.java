@@ -1,10 +1,7 @@
 package com.xiaohai.newsassistant.service.impl;
 
 import cn.hutool.json.JSONObject;
-import com.xiaohai.newsassistant.help.CCTVNewsHelp;
-import com.xiaohai.newsassistant.help.SinaNewsHelp;
 import com.xiaohai.newsassistant.help.WxHelp;
-import com.xiaohai.newsassistant.pojo.SinaAiNewsPojo;
 import com.xiaohai.newsassistant.service.NewsAssistantService;
 import com.xiaohai.newsassistant.service.impl.news.CCTVNewsServiceImpl;
 import com.xiaohai.newsassistant.service.impl.news.SinaNewsServiceImpl;
@@ -15,7 +12,6 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @Description: 微信公众号新闻助手
@@ -70,8 +66,6 @@ public class WxOfficialAccountServiceImpl implements NewsAssistantService {
         log.info(cctvNews);
 
         String formatAiNewsContent = sinaNewsService.getFormatAiNewsContent(dateStr);
-//        log.info(" ======= sinaAiNews ======");
-//        log.info(sinaAiNewsPojo.toString());
 
         String everydayEngilsh = getEverydayEngilsh();
 

@@ -1,5 +1,7 @@
 package com.xiaohai.newsassistant.service;
 
+import com.xiaohai.newsassistant.enums.ChatModelEnum;
+
 /**
  * @Description: ChatService
  * @Author: XiaoYunTao
@@ -13,5 +15,5 @@ public interface ChatService {
      * @param content 内容
      * @return 模型处理的结果
      */
-    String processChat(String prompt, String content);
+    String processChat(ChatModelEnum chatModelEnum, String prompt, String content);
 }

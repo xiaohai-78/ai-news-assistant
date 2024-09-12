@@ -1,5 +1,6 @@
 package com.xiaohai.newsassistant.controller;
 
+import com.xiaohai.newsassistant.enums.ChatModelEnum;
 import com.xiaohai.newsassistant.enums.PromptEnum;
 import com.xiaohai.newsassistant.pojo.SinaAiNewsPojo;
 import com.xiaohai.newsassistant.pojo.dto.ChatOllamaDTO;
@@ -50,7 +51,7 @@ public class ChatController {
 
     @PostMapping("ollama/translate")
     public Map<String, String> translate(@RequestBody @Valid ChatOllamaDTO chatOllamaDTO) {
-        String call = chatService.processChat(PromptEnum.TRANSLATE.getPrompt(), chatOllamaDTO.getMessage());
+        String call = chatService.processChat(ChatModelEnum.OLLAMA, PromptEnum.TRANSLATE.getPrompt(), chatOllamaDTO.getMessage());
         System.out.println(call);
         return Map.of("message", call);
     }

@@ -36,7 +36,7 @@ public abstract class NewsAbstractService implements NewsService {
         }
         ChatService chatModelService = chatModelServiceFactory.getChatModelService(chatModelEnum);
         try {
-            String response = chatModelService.processChat(PromptEnum.NEWS_ASSISTANT.getPrompt(), originalNews);
+            String response = chatModelService.processChat(chatModelEnum, PromptEnum.NEWS_ASSISTANT.getPrompt(), originalNews);
             log.info("ChatResponse: " + response.toString());
             responseJson = new JSONObject(response);
         } catch (JSONException exception){

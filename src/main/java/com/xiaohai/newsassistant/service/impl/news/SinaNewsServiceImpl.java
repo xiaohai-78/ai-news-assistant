@@ -1,12 +1,9 @@
 package com.xiaohai.newsassistant.service.impl.news;
 
 import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONException;
 import cn.hutool.json.JSONObject;
 import com.xiaohai.newsassistant.enums.ChatModelEnum;
-import com.xiaohai.newsassistant.enums.PromptEnum;
 import com.xiaohai.newsassistant.pojo.SinaAiNewsPojo;
-import com.xiaohai.newsassistant.service.ChatService;
 import com.xiaohai.newsassistant.service.abstracts.NewsAbstractService;
 import com.xiaohai.newsassistant.utils.OkHttpUtil;
 import com.xiaohai.newsassistant.utils.StringUtil;
@@ -17,7 +14,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,9 +29,6 @@ import java.util.regex.Pattern;
 @Slf4j
 @Service
 public class SinaNewsServiceImpl extends NewsAbstractService {
-
-    @Resource
-    private ChatService chatService;
 
     @Override
     public List<String> getOriginalNews(String date) {
@@ -155,40 +148,11 @@ public class SinaNewsServiceImpl extends NewsAbstractService {
         // 使用正则表达式匹配从"start"开始至"end"结束的内容，包括"start"和"end"
         Pattern pattern = Pattern.compile("<h1 style(.*?)</h1>");
         Matcher matcher = pattern.matcher(text);
-        int i = 1;
         while (matcher.find()) {
             String content = matcher.group(0); // 使用group(0)来获取整个匹配
             stringBuffer.append(content);
         }
-
         return stringBuffer.toString();
     }
 
-//
-//    /**
-//     * 获取JSONObject格式的ai总结的内容
-//     * @param originalNews 原文
-//     * @param retryTimes 重试次数，幻觉导致生成的Json格式有问题进行重试
-//     * @return JSONObject
-//     */
-//    private JSONObject getAiContent(String originalNews,int retryTimes) {
-//        JSONObject responseJson = null;
-//        if(retryTimes > 2) {
-//            log.error("重试次数已超过{}次, 原文：{}", retryTimes, originalNews);
-//            return null;
-//        }
-//        try {
-//            String response = chatService.processChat(PromptEnum.NEWS_ASSISTANT.getPrompt(), originalNews);
-//            log.info("ChatResponse: " + response.toString());
-//            responseJson = new JSONObject(response);
-//        } catch (JSONException exception){
-//            // 生成Json失败了就重新生成，最多试3次
-//            log.error("生成Json格式错误");
-//            responseJson = getAiContent(originalNews, ++retryTimes);
-//        } catch (Exception e){
-//            log.error("ChatsinaAiNewsPojo error", e);
-//        }
-//
-//        return responseJson;
-//    }
 }
