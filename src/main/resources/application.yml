@@ -7,8 +7,6 @@ spring:
       chat:
         options:
           model: qwen2:latest
-          keep-alive: 60s
-          read-timeout: 60s
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: root
@@ -16,6 +14,7 @@ spring:
     username: root
 
 
+## 微信公众号配置，不需要的可以不用修改填写，获取地址 https://mp.weixin.qq.com/cgi-bin/safecenterstatus?action=view&t=setting/safe-index
 wx:
   mp:
     useRedis: false

@@ -145,54 +145,6 @@ public class WxHelp {
         return res.getStr("access_token");
     }
 
-    public static String publish(String title, String sourceUrl, WeChatOfficial chatOfficialConfig){
-        String tokenUrl = "https://api.weixin.qq.com/cgi-bin/token";
-        String publishId = null;
-        Map<String, Object> paraObj = new HashMap<>();
-        JSONArray paraArr = new JSONArray();
-        //组装草稿箱需要的参数
-        JSONObject para = new JSONObject();
-        para.put("title", title);
-        para.put("content", "<p><a href='"+sourceUrl+"'><img src='"+chatOfficialConfig.getImageUrl()+"'/></a></p>\n" +
-                "<a href='"+sourceUrl+"' style=\"color: #FFFFFF; text-decoration: none;\"><section style=\"text-align: center; margin-top: 8px; background: rgb(234, 68, 90); height: 48px; border-radius: 2px; color: rgb(255, 255, 255); line-height: 48px; font-size: 17px; text-shadow: rgb(255, 185, 149) 1px 1px 3px;\"><strong>打开剧场</strong></section></a>");
-        para.put("thumb_media_id", chatOfficialConfig.getMediaId());
-        para.put("content_source_url", sourceUrl);
-        paraArr.add(para);
-        paraObj.put("articles", paraArr);
-        //先获取公众号token
-//        String tokenResult = HttpUtils.sendGet(tokenUrl+"?grant_type=client_credential&appid="+chatOfficialConfig.getAppId()+"&secret="+chatOfficialConfig.getAppSecret());
-        String tokenResult = OkHttpUtil.get(tokenUrl + "?grant_type=client_credential&appid=" + chatOfficialConfig.getAppId() + "&secret=" + chatOfficialConfig.getAppSecret());
-        if(StringUtils.isNotEmpty(tokenResult)) {
-            log.info("公众号token:"+tokenResult);
-//            JSONObject jsonObject = JSONObject.parseObject(tokenResult);
-            JSONObject jsonObject = new JSONObject(tokenResult);
-            String accessToken = jsonObject.getStr("access_token");
-            String result = OkHttpUtil.post("https://api.weixin.qq.com/cgi-bin/draft/add?access_token=" + accessToken, paraObj, new HashMap<>());
-//            String result = HttpUtils.sendPostByJSON("https://api.weixin.qq.com/cgi-bin/draft/add?access_token="+accessToken, paraObj.toString());
-            log.info("新建草稿返回："+result);
-            //{"media_id":"MEDIA_ID","item":[]} media_id 上传后的获取标志，长度不固定，但不会超过 128 字符
-//            JSONObject draftObj = JSONObject.parseObject(result);
-            JSONObject draftObj = new JSONObject(result);
-            String mediaId = draftObj.getStr("media_id");
-            //发布草稿
-            String publishUrl = "https://api.weixin.qq.com/cgi-bin/freepublish/submit?access_token="+accessToken;
-            JSONObject pObj = new JSONObject();
-            pObj.put("media_id", mediaId);
-//            String result1 = HttpUtils.sendPostByJSON(publishUrl, pObj.toString());
-            String result1 = OkHttpUtil.post(publishUrl, pObj.toString());
-            log.info("发布草稿返回："+result1);
-//            JSONObject pubObj = JSONObject.parseObject(result1);
-            JSONObject pubObj = new JSONObject(result1);
-            Integer errCode = pubObj.getInt("errcode");
-            if(errCode==0){
-                publishId = pubObj.getStr("publish_id");
-            }
-            return publishId;
-        }else{
-            return null;
-        }
-    }
-
     public void test() throws WxErrorException {
         wxMpMaterialService.mediaUpload(WxConsts.XmlMsgType.IMAGE, new File("～/Users/xiaoyuntao/Documents/IMG_0003.JPG"));
     }

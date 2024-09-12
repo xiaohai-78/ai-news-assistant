@@ -153,64 +153,6 @@ public class OkHttpUtil {
     }
 
     /**
-     * get请求（同步）, 注意！！！返回的Response使用完后记得close
-     * 返回{@link okhttp3.Response}
-     * @param url 请求地址,不能为空
-     * @return 返回get请求{@link okhttp3.Response}，请求失败则返回null
-     */
-    public static Response getRetResponse(String url) {
-        return getRetResponse(url, null);
-    }
-
-    /**
-     * get请求（同步）, 注意！！！返回的Response使用完后记得close
-     * 返回{@link okhttp3.Response}
-     * @param url 请求地址,不能为空
-     * @param params 请求参数，置于url后，可以为空
-     * @return 返回get请求{@link okhttp3.Response}，请求失败则返回null
-     */
-    public static Response getRetResponse(String url,Map<String, Object> params) {
-        Request request = constructGetRequest(url, params, null);
-        // 请求发送
-        try {
-            return CLIENT.newCall(request).execute();
-        } catch (IOException e) {
-            LOG.error("OkHttpUtil post error", e);
-            return null;
-        }
-    }
-
-    /**
-     * post请求（同步）
-     * MediaType 为 application/x-www-form-urlencoded
-     * @param url 请求地址，不能为空
-     * @param params 请求参数，置于request body，不能为空
-     * @return 返回post请求response，请求失败则返回null
-     */
-    public static String post(String url, Map<String, Object> params) {
-        return post(url, params, null);
-    }
-
-    /**
-     * post请求（同步）
-     * MediaType 为 application/x-www-form-urlencoded
-     * @param url 请求地址，不能为空
-     * @param params 请求参数，置于request body，不能为空
-     * @param headers 请求头，可以为空
-     * @return 返回post请求response，请求失败则返回null
-     */
-    public static String post(String url, Map<String, Object> params, Map<String, String> headers) {
-        if (StringUtil.isEmpty(url)) {
-            throw new IllegalArgumentException("url不能为空");
-        }
-        if (params == null) {
-            throw new IllegalArgumentException("params不能为空");
-        }
-        String paramStr = CommentUtil.mapToUrl(params).substring(3);
-        return post(url, paramStr, APPLICATION_FORM_URLENCODED_VALUE, headers);
-    }
-
-    /**
      * post请求（同步）
      * MediaType 为 application/json
      * @param url 请求地址，不能为空
@@ -237,52 +179,6 @@ public class OkHttpUtil {
 
     /**
      * post请求（同步）
-     * MediaType 为 application/json
-     * @param url 请求地址，不能为空
-     * @param jsonData 请求体，放置在request body内，不能为空
-     * @return 返回post请求response，请求失败则返回null
-     */
-    public static String post(String url, String jsonData) {
-        return post(url, jsonData, null);
-    }
-
-    /**
-     * post请求（同步）
-     * MediaType 为 application/json
-     * @param url 请求地址，不能为空
-     * @param jsonData 请求体，放置在request body内，不能为空; 格式为object, 常见一般为Map或者JSONObject
-     * @return 返回post请求response，格式为JSONObject, 请求失败则返回null
-     */
-    public static JSONObject post(String url, Object jsonData) {
-        return post(url, jsonData, null);
-    }
-
-    /**
-     * post请求（同步）
-     * MediaType 为 application/json
-     * @param url 请求地址，不能为空
-     * @param jsonData 请求体，放置在request body内，不能为空; 格式为object, 常见一般为Map或者JSONObject
-     * @param headers 请求头，可以为空
-     * @return 返回post请求response，格式为JSONObject, 请求失败则返回null
-     */
-    public static JSONObject post(String url, Object jsonData, Map<String, String> headers) {
-        return JSON.parseObject(post(url, JSON.toJSONString(jsonData), headers));
-    }
-
-    /**
-     * post请求（同步）
-     * MediaType 为 application/json
-     * @param url 请求地址，不能为空
-     * @param jsonData 请求体，放置在request body内，不能为空
-     * @param headers 请求头，可以为空
-     * @return 返回post请求response，请求失败则返回null
-     */
-    public static String post(String url, String jsonData, Map<String, String> headers) {
-        return post(url, jsonData, APPLICATION_JSON_UTF8_VALUE, headers);
-    }
-
-    /**
-     * post请求（同步）
      * MediaType 为 contentType
      * @param url 请求地址，不能为空
      * @param strData 请求体，放置于request body, 不能为空
@@ -294,51 +190,6 @@ public class OkHttpUtil {
         Request request = constructPostRequest(url, strData, contentType, headers);
         // 请求发送
         return doSyncRequest(request);
-    }
-
-    /**
-     * post请求（同步）
-     * MediaType 为 contentType
-     * @param url 请求地址，不能为空
-     * @param byteData 请求体，字节数组
-     * @param contentType content-type 默认 application/octet-stream
-     * @param headers 请求头，可以为空
-     * @return 返回post请求response，请求失败则返回null
-     */
-    public static String post(String url, byte[] byteData, String contentType, Map<String, String> headers) {
-        Request request = constructPostRequest(url, byteData, contentType, headers);
-        // 请求发送
-        return doSyncRequest(request);
-    }
-
-    /**
-     * post请求（同步）, 注意！！！返回的Response使用完后记得close
-     * MediaType 为 {@value APPLICATION_JSON_UTF8_VALUE}, 返回{@link okhttp3.Response}
-     * @param url 请求地址，不能为空
-     * @param strData 请求体，放置于request body, application/json类型 不能为空
-     * @return 返回post请求{@link okhttp3.Response}，请求失败则返回null
-     */
-    public static Response postRetResponse(String url, String strData) {
-        return postRetResponse(url, strData, APPLICATION_JSON_UTF8_VALUE, null);
-    }
-
-    /**
-     * post请求（同步）, 注意！！！返回的Response使用完后记得close
-     * MediaType 为 contentType, 返回{@link okhttp3.Response}
-     * @param url 请求地址，不能为空
-     * @param strData 请求体，放置于request body, 不能为空
-     * @param contentType content-type 默认 application/json;charset=UTF-8
-     * @param headers 请求头，可以为空
-     * @return 返回post请求{@link okhttp3.Response}，请求失败则返回null
-     */
-    public static Response postRetResponse(String url, String strData, String contentType, Map<String, String> headers) {
-        Request request = constructPostRequest(url, strData, contentType, headers);
-        try {
-            return CLIENT.newCall(request).execute();
-        } catch (IOException e) {
-            LOG.error("OkHttpUtil post error", e);
-            return null;
-        }
     }
 
     /**
@@ -397,42 +248,6 @@ public class OkHttpUtil {
     }
 
     /**
-     * 构建post请求Request实体
-     * MediaType 为 contentType
-     * @param url 请求地址，不能为空
-     * @param byteData 请求体，放置于request body, 不能为空
-     * @param contentType content-type 默认 application/octet-stream
-     * @param headers 请求头，可以为空
-     * @return 返回构建好的post Request实体
-     */
-    private static Request constructPostRequest(String url, byte[] byteData, String contentType, Map<String, String> headers) {
-        if (StringUtil.isEmpty(url)) {
-            throw new IllegalArgumentException("url不能为空");
-        }
-        // 请求体
-        RequestBody requestBody = constructRequestBody(byteData, contentType);
-        // 请求构建
-        return buildPostRequest(url, requestBody, headers);
-    }
-
-    /**
-     * 构建post请求Request实体
-     * MediaType 为 multipart/form-data
-     * @param url 请求地址，不能为空
-     * @param fileFormPart 文件上传formPart
-     * @param headers 请求头，可以为空
-     * @return 返回构建好的post Request实体
-     */
-    private static Request constructMultiPartPostRequest(String url, FileFormPart fileFormPart, Map<String, String> headers) {
-        if (StringUtil.isEmpty(url)) {
-            throw new IllegalArgumentException("url不能为空");
-        }
-        // 构建multipartBody
-        RequestBody multipartBody = constructMultipartBody(fileFormPart);
-        return buildPostRequest(url, multipartBody, headers);
-    }
-
-    /**
      * 通用构建post Request方法
      * @param url 请求地址，不能为空
      * @param requestBody 请求体，放置于request body, 不能为空
@@ -454,21 +269,6 @@ public class OkHttpUtil {
     }
 
     /**
-     * 构建Multipart RequestBody
-     * @param fileFormPart 文件上传formPart
-     * @return 返回构建的RequestBody
-     */
-    private static RequestBody constructMultipartBody(FileFormPart fileFormPart) {
-        if (fileFormPart == null || fileFormPart.getRequestBody() == null) {
-            throw new IllegalArgumentException("fileFormPart不能为空");
-        }
-        return new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart(fileFormPart.getName(), fileFormPart.getFilename(), fileFormPart.getRequestBody())
-                .build();
-    }
-
-    /**
      * 构建请求体，String输入
      * content-type 为 contentType
      * @param strData 请求体内容
@@ -486,63 +286,6 @@ public class OkHttpUtil {
     }
 
     /**
-     * 构建请求体，String输入
-     * content-type 为 contentType
-     * @param byteData 请求体内容
-     * @param contentType content-type 默认 application/octet-stream
-     * @return 返回构建的RequestBody
-     */
-    private static RequestBody constructRequestBody(byte[] byteData, String contentType) {
-        if (byteData == null) {
-            throw new IllegalArgumentException("byteData不能为空");
-        }
-        if (StringUtil.isEmpty(contentType)) {
-            contentType = APPLICATION_OCTET_STREAM_VALUE;
-        }
-        return RequestBody.create(MediaType.parse(contentType), byteData);
-    }
-
-    /**
-     * 构建put请求Request实体
-     * MediaType 为 contentType
-     * @param url 请求地址，不能为空
-     * @param strData 请求体，放置于request body, 不能为空
-     * @param contentType content-type 默认 application/json;charset=UTF-8
-     * @param headers 请求头，可以为空
-     * @return 返回构建好的post Request实体
-     */
-    private static Request constructPutRequest(String url, String strData, String contentType, Map<String, String> headers) {
-        if (StringUtil.isEmpty(url)) {
-            throw new IllegalArgumentException("url不能为空");
-        }
-        // 请求体
-        RequestBody requestBody = constructRequestBody(strData, contentType);
-        // 请求构建
-        return buildPutRequest(url, requestBody, headers);
-    }
-
-    /**
-     * 通用构建put Request方法
-     * @param url 请求地址，不能为空
-     * @param requestBody 请求体，放置于request body, 不能为空
-     * @param headers 请求头，可以为空
-     * @return 返回构建好的post Request实体
-     */
-    private static Request buildPutRequest(String url, RequestBody requestBody, Map<String, String> headers) {
-        // 请求构建
-        Request.Builder requestBuilder = new Request.Builder()
-                .url(url)
-                .put(requestBody);
-        // 请求头
-        if (headers!= null && !headers.isEmpty()) {
-            for (Map.Entry<String, String> entry : headers.entrySet()) {
-                requestBuilder.addHeader(entry.getKey(), entry.getValue());
-            }
-        }
-        return requestBuilder.build();
-    }
-
-    /**
      * 进行同步请求，并返回结果(String)
      * @param request 同步请求体
      * @return 返回请求response，请求失败则返回null
@@ -557,47 +300,6 @@ public class OkHttpUtil {
             LOG.error("OkHttpUtil post error", e);
         }
         return null;
-    }
-
-    /**
-     * 进行异步请求，并触发回调逻辑
-     * @param request 请求实体
-     * @param netCall 自定义网络回调实现
-     */
-    private static void doAsyncRequest(Request request, final NetCall netCall) {
-        // 将request封装为call
-        Call call = CLIENT.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                netCall.failed(call, e);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                netCall.success(call, response);
-            }
-        });
-    }
-
-    /**
-     * 自定义网络回调接口
-     */
-    public interface NetCall {
-        /**
-         * 异步请求成功逻辑
-         * @param call Call实体
-         * @param response 响应实体Response
-         * @throws IOException 异常
-         */
-        void success(Call call, Response response) throws IOException;
-
-        /**
-         * 异步请求失败逻辑
-         * @param call Call实体
-         * @param e 异常
-         */
-        void failed(Call call, IOException e);
     }
 
     /**

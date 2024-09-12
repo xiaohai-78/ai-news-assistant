@@ -7,15 +7,10 @@ import java.util.Date;
 public class DateTimeUtil {
 
     public static void main(String[] args) {
-//        System.out.println(getStringShort());
-//        long timestamp = getTimestamp();
-//        System.out.println(timestamp);
-//        System.out.println(getTodayInt(timestamp));
         System.out.println(getWxTitleTime());
     }
 
     public static SimpleDateFormat SDFYMDHM = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    public static SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static SimpleDateFormat SDFSHORT = new SimpleDateFormat("yyyyMMdd");
 
     /**
@@ -85,16 +80,6 @@ public class DateTimeUtil {
             dateStr = DateTimeUtil.getStringEpochSecond(todayInt + 25 * 60 *60, DateTimeUtil.SDFSHORT);
         }
         return dateStr;
-    }
-
-    /**
-     * 获取格式化的时间
-     *
-     * @param epochSecond 需要格式化的时间 精确到秒的时间戳
-     * @param formatStr   格式化方式
-     */
-    public static String getStringEpochSecond(Long epochSecond, String formatStr) {
-        return getStringEpochSecond(epochSecond, new SimpleDateFormat(formatStr));
     }
 
     /**

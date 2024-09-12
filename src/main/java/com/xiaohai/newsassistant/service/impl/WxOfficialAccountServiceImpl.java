@@ -43,10 +43,7 @@ public class WxOfficialAccountServiceImpl implements NewsAssistantService {
         if (wxHelp.getWxToken() == null){
             throw new RuntimeException("公众号接口请求失败！请检查IP白名单配置和secret配置,https://mp.weixin.qq.com/cgi-bin/safecenterstatus?action=view&t=setting/safe-index");
         }
-
-        // 获取内容
         String str = getContent();
-
         // 发送到草稿箱
         return wxHelp.addDraft(DateTimeUtil.getWxTitleTime(), str, thumbMediaId);
     }
@@ -62,8 +59,7 @@ public class WxOfficialAccountServiceImpl implements NewsAssistantService {
 
         // 获取当天新闻联播
         String cctvNews = cctvNewsService.getOriginalNews(dateStr);
-        log.info(" ======= cctvNews ======");
-        log.info(cctvNews);
+        log.info(" ======= cctvNews ====== {}", cctvNews);
 
         String formatAiNewsContent = sinaNewsService.getFormatAiNewsContent(dateStr);
 
@@ -86,7 +82,6 @@ public class WxOfficialAccountServiceImpl implements NewsAssistantService {
         JSONObject result = everydayEngilsh.getJSONObject("result");
         String englishSentence = result.getStr("content");
         String chinaSentence = result.getStr("note");
-
         return  englishSentence + " <br/> " + chinaSentence;
     }
 

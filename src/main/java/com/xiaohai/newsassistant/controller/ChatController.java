@@ -42,6 +42,11 @@ public class ChatController {
     @Resource
     private CCTVNewsServiceImpl cctvNewsService;
 
+    /**
+     * 直接对话接口
+     * @param message
+     * @return
+     */
     @PostMapping("generate")
     public Map<String, String> generate(@RequestParam(value = "message",defaultValue = "你好，你是谁？") String message) {
         String call = ollamaChatClient.call(message);
@@ -49,6 +54,11 @@ public class ChatController {
         return Map.of("message", call);
     }
 
+    /**
+     * 有提示词的对话接口
+     * @param chatOllamaDTO
+     * @return
+     */
     @PostMapping("ollama/translate")
     public Map<String, String> translate(@RequestBody @Valid ChatOllamaDTO chatOllamaDTO) {
         String call = chatService.processChat(ChatModelEnum.OLLAMA, PromptEnum.TRANSLATE.getPrompt(), chatOllamaDTO.getMessage());
@@ -56,6 +66,11 @@ public class ChatController {
         return Map.of("message", call);
     }
 
+    /**
+     * 生成新闻内容
+     * 新闻联播 + 新浪财经新闻
+     * @return
+     */
     @GetMapping("allNews")
     public Map<String, String> allNews() {
         String dateStr = DateTimeUtil.getNewsTime();
