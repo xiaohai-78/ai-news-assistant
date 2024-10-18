@@ -45,6 +45,7 @@ public abstract class NewsAbstractService implements NewsService {
             articlesByAiPojo = getAiContent(chatModelEnum, originalNews, ++retryTimes);
         } catch (Exception e){
             log.error("ChatsinaAiNewsPojo error", e);
+            throw new RuntimeException(e);
         }
 
         return articlesByAiPojo;
