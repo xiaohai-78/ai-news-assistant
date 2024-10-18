@@ -1,18 +1,17 @@
 package com.xiaohai.newsassistant.service.abstracts;
 
-import com.alibaba.fastjson.JSON;
 import com.xiaohai.newsassistant.enums.ChatModelEnum;
 import com.xiaohai.newsassistant.pojo.ArticlesByAiPojo;
 import com.xiaohai.newsassistant.service.ChatService;
 import com.xiaohai.newsassistant.service.factory.ChatModelFacotry;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,7 +22,8 @@ import java.util.List;
  * @Date: 2024/9/10
  */
 @Slf4j
-public abstract class ChatBaseAbstractService implements ChatService {
+@Service
+public class ChatBaseService implements ChatService {
 
     @Resource
     private ChatModelFacotry chatModelFacotry;

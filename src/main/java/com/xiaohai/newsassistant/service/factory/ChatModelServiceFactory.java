@@ -2,7 +2,7 @@ package com.xiaohai.newsassistant.service.factory;
 
 import com.xiaohai.newsassistant.enums.ChatModelEnum;
 import com.xiaohai.newsassistant.service.ChatService;
-import com.xiaohai.newsassistant.service.impl.OllamaChatServiceImpl;
+import com.xiaohai.newsassistant.service.abstracts.ChatBaseService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -16,12 +16,12 @@ import javax.annotation.Resource;
 public class ChatModelServiceFactory {
 
     @Resource
-    private OllamaChatServiceImpl ollamaChatService;
+    private ChatBaseService chatBaseService;
 
     public ChatService getChatModelService(ChatModelEnum chatModelEnum) {
         switch (chatModelEnum) {
             case OLLAMA:
-                return ollamaChatService;
+                return chatBaseService;
             default:
                 return null;
         }

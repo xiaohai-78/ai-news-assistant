@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @Date: 2024/9/10
  */
 @Slf4j
-@Service
+@Service("cCTVNewsServiceImpl")
 public class CCTVNewsServiceImpl extends NewsAbstractService {
     /**
      * 获取新闻联播简介

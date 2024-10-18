@@ -29,17 +29,20 @@ import java.util.Map;
 @RequestMapping("/chat")
 public class ChatController {
 
-    @Resource
-    private OllamaChatModel ollamaChatClient;
+    private final OllamaChatModel ollamaChatClient;
 
     @Resource
     private ChatService chatService;
 
-    @Resource
-    private SinaNewsServiceImpl sinaNewsService;
+//    @Resource
+//    private SinaNewsServiceImpl sinaNewsService;
+//
+//    @Resource
+//    private CCTVNewsServiceImpl cctvNewsService;
 
-    @Resource
-    private CCTVNewsServiceImpl cctvNewsService;
+    public ChatController(OllamaChatModel ollamaChatClient) {
+        this.ollamaChatClient = ollamaChatClient;
+    }
 
     /**
      * 直接对话接口
@@ -70,11 +73,11 @@ public class ChatController {
      * 新闻联播 + 新浪财经新闻
      * @return
      */
-    @GetMapping(value = "allNews")
-    public Map<String, String> allNews() {
-        String dateStr = DateTimeUtil.getNewsTime();
-        String cctvNewsServiceOriginalNews = cctvNewsService.getOriginalNews(dateStr);
-        List<SinaAiNewsPojo> aiSinaNewsContent = sinaNewsService.getAiSinaNewsContent(dateStr);
-        return Map.of("message", "success", "cctvNewsServiceOriginalNews", cctvNewsServiceOriginalNews, "aiSinaNewsContent", aiSinaNewsContent.toString());
-    }
+//    @GetMapping(value = "allNews")
+//    public Map<String, String> allNews() {
+//        String dateStr = DateTimeUtil.getNewsTime();
+//        String cctvNewsServiceOriginalNews = cctvNewsService.getOriginalNews(dateStr);
+//        List<SinaAiNewsPojo> aiSinaNewsContent = sinaNewsService.getAiSinaNewsContent(dateStr);
+//        return Map.of("message", "success", "cctvNewsServiceOriginalNews", cctvNewsServiceOriginalNews, "aiSinaNewsContent", aiSinaNewsContent.toString());
+//    }
 }
