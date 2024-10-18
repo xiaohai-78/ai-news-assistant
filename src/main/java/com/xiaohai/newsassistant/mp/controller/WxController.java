@@ -1,7 +1,7 @@
 package com.xiaohai.newsassistant.mp.controller;
 
 import cn.hutool.json.JSONObject;
-import com.xiaohai.newsassistant.mp.service.WxAiService;
+import com.xiaohai.newsassistant.mp.service.WxBaseService;
 import com.xiaohai.newsassistant.mp.service.WxMpMaterial2Service;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -25,7 +25,7 @@ public class WxController {
     WxMpMaterial2Service wxMpMaterialService;
 
     @Resource
-    WxAiService wxAiService;
+    WxBaseService wxBaseService;
 
     private static final String appid = "wxd35893d33ff520e2";
 
@@ -33,7 +33,7 @@ public class WxController {
     public void addDraft(@RequestBody String str) throws WxErrorException {
         System.out.println(str);
         JSONObject jsonObject = new JSONObject(str);
-        wxAiService.addDraft(jsonObject.getStr("title"), jsonObject.getStr("content"), null);
+        wxBaseService.addDraft(jsonObject.getStr("title"), jsonObject.getStr("content"), null);
     }
 
     /**
@@ -53,7 +53,7 @@ public class WxController {
      */
     @RequestMapping(value = "/mediaImg2", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public void mediaImg2(@RequestBody String str) throws WxErrorException {
-        WxMpMaterialUploadResult wxMpMaterialUploadResult = wxAiService.mediaImg2(str);
+        WxMpMaterialUploadResult wxMpMaterialUploadResult = wxBaseService.mediaImg2(str);
         System.out.println("=====   返回mediaId    ======");
         System.out.println(wxMpMaterialUploadResult);
     }
@@ -76,7 +76,7 @@ public class WxController {
 
     @RequestMapping(value = "/mediaImgGet", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public void mediaImgGet(String str) throws WxErrorException {
-        System.out.println(wxAiService.mediaImgGet(0, 20).toString());
+        System.out.println(wxBaseService.mediaImgGet(0, 20).toString());
     }
 
 }

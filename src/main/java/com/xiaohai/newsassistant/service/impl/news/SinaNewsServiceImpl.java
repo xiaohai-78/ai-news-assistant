@@ -3,6 +3,7 @@ package com.xiaohai.newsassistant.service.impl.news;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import com.xiaohai.newsassistant.enums.ChatModelEnum;
+import com.xiaohai.newsassistant.pojo.ArticlesByAiPojo;
 import com.xiaohai.newsassistant.pojo.SinaAiNewsPojo;
 import com.xiaohai.newsassistant.service.abstracts.NewsAbstractService;
 import com.xiaohai.newsassistant.utils.OkHttpUtil;
@@ -59,14 +60,14 @@ public class SinaNewsServiceImpl extends NewsAbstractService {
             if (StringUtil.isEmpty(news)) {
                 continue;
             }
-            JSONObject aiContent = getAiContent(ChatModelEnum.OLLAMA, news, 0);
-            if (Objects.isNull(aiContent) || aiContent.isEmpty()) {continue;}
-            String resp = aiContent.getStr("title") + aiContent.getStr("context");
+            ArticlesByAiPojo aiContent = getAiContent(ChatModelEnum.OLLAMA, news, 0);
+            if (Objects.isNull(aiContent)) {continue;}
+            String resp = aiContent.getTitle() + aiContent.getContent();
             if (Objects.isNull(resp) || resp.isEmpty() || resp.length() < 50) {
                 continue;
             }
-            sinaAiNewsPojo.setTitles(aiContent.getStr("title"));
-            sinaAiNewsPojo.setContent(aiContent.getStr("context"));
+            sinaAiNewsPojo.setTitles(aiContent.getTitle());
+            sinaAiNewsPojo.setContent(aiContent.getContent());
             sinaAiNewsPojos.add(sinaAiNewsPojo);
         }
         return sinaAiNewsPojos;

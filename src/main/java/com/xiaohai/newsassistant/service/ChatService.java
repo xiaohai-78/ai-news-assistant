@@ -1,6 +1,7 @@
 package com.xiaohai.newsassistant.service;
 
 import com.xiaohai.newsassistant.enums.ChatModelEnum;
+import com.xiaohai.newsassistant.pojo.ArticlesByAiPojo;
 
 /**
  * @Description: ChatService
@@ -16,4 +17,6 @@ public interface ChatService {
      * @return 模型处理的结果
      */
     String processChat(ChatModelEnum chatModelEnum, String prompt, String content);
+
+    ArticlesByAiPojo processConverterChat(ChatModelEnum chatModelEnum, String prompt, String content);
 }

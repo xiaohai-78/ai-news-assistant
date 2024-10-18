@@ -6,7 +6,7 @@ spring:
       base-url: http://localhost:11434
       chat:
         options:
-          model: qwen2:latest
+          model: qwen2.5
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: root
@@ -27,3 +27,5 @@ wx:
         secret: 42aaf0250cf1e7e9a29135fb60317d60
         token: Token
         aesKey: QiqUFt92R5V1OdMOdKKOCdeUTwHhqkanpKKIFvlbhOW
+server:
+  port: 8081

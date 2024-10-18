@@ -9,12 +9,11 @@ import com.xiaohai.newsassistant.service.impl.news.CCTVNewsServiceImpl;
 import com.xiaohai.newsassistant.service.impl.news.SinaNewsServiceImpl;
 import com.xiaohai.newsassistant.utils.DateTimeUtil;
 import org.springframework.ai.ollama.OllamaChatModel;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -44,12 +43,12 @@ public class ChatController {
 
     /**
      * 直接对话接口
-     * @param message
+     * @param chatOllamaDTO
      * @return
      */
-    @PostMapping("generate")
-    public Map<String, String> generate(@RequestParam(value = "message",defaultValue = "你好，你是谁？") String message) {
-        String call = ollamaChatClient.call(message);
+    @PostMapping(value = "generate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, String> generate(@RequestBody @Valid ChatOllamaDTO chatOllamaDTO) {
+        String call = ollamaChatClient.call(chatOllamaDTO.getMessage());
         System.out.println(call);
         return Map.of("message", call);
     }
@@ -59,7 +58,7 @@ public class ChatController {
      * @param chatOllamaDTO
      * @return
      */
-    @PostMapping("ollama/translate")
+    @PostMapping(value = "ollama/translate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> translate(@RequestBody @Valid ChatOllamaDTO chatOllamaDTO) {
         String call = chatService.processChat(ChatModelEnum.OLLAMA, PromptEnum.TRANSLATE.getPrompt(), chatOllamaDTO.getMessage());
         System.out.println(call);
@@ -71,7 +70,7 @@ public class ChatController {
      * 新闻联播 + 新浪财经新闻
      * @return
      */
-    @GetMapping("allNews")
+    @GetMapping(value = "allNews")
     public Map<String, String> allNews() {
         String dateStr = DateTimeUtil.getNewsTime();
         String cctvNewsServiceOriginalNews = cctvNewsService.getOriginalNews(dateStr);

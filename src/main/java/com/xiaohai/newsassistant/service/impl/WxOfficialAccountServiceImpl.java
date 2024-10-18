@@ -1,7 +1,7 @@
 package com.xiaohai.newsassistant.service.impl;
 
 import cn.hutool.json.JSONObject;
-import com.xiaohai.newsassistant.help.WxHelp;
+import com.xiaohai.newsassistant.mp.service.WxBaseService;
 import com.xiaohai.newsassistant.service.NewsAssistantService;
 import com.xiaohai.newsassistant.service.impl.news.CCTVNewsServiceImpl;
 import com.xiaohai.newsassistant.service.impl.news.SinaNewsServiceImpl;
@@ -23,13 +23,13 @@ import javax.annotation.Resource;
 public class WxOfficialAccountServiceImpl implements NewsAssistantService {
 
     @Resource
-    private WxHelp wxHelp;
-
-    @Resource
     private SinaNewsServiceImpl sinaNewsService;
 
     @Resource
     private CCTVNewsServiceImpl cctvNewsService;
+
+    @Resource
+    WxBaseService wxBaseService;
 
     /**
      * 封面图片
@@ -40,12 +40,12 @@ public class WxOfficialAccountServiceImpl implements NewsAssistantService {
     @Override
     public String execute() throws WxErrorException {
         // 判断能否正常请求公众号接口
-        if (wxHelp.getWxToken() == null){
+        if (wxBaseService.getWxToken() == null){
             throw new RuntimeException("公众号接口请求失败！请检查IP白名单配置和secret配置,https://mp.weixin.qq.com/cgi-bin/safecenterstatus?action=view&t=setting/safe-index");
         }
         String str = getContent();
         // 发送到草稿箱
-        return wxHelp.addDraft(DateTimeUtil.getWxTitleTime(), str, thumbMediaId);
+        return wxBaseService.addDraft(DateTimeUtil.getWxTitleTime(), str, thumbMediaId);
     }
 
     @Override

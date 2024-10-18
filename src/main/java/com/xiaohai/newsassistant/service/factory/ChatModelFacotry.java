@@ -13,15 +13,15 @@ import javax.annotation.Resource;
  * @Date: 2024/9/12
  */
 @Component
-public class ChatModelClientFacotry {
+public class ChatModelFacotry {
 
     @Resource
-    private OllamaChatModel ollamaChatClient;
+    private OllamaChatModel ollamaChatModel;
 
-    public ChatModel getChatModelClientFacotry(ChatModelEnum chatModelEnum) {
+    public ChatModel getChatModelFacotry(ChatModelEnum chatModelEnum) {
         switch (chatModelEnum) {
             case OLLAMA:
-                return ollamaChatClient;
+                return ollamaChatModel;
             default:
                 return null;
         }
