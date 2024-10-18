@@ -51,10 +51,6 @@ public abstract class ChatBaseAbstractService implements ChatService {
 
     @Override
     public ArticlesByAiPojo processConverterChat(ChatModelEnum chatModelEnum, String prompt, String content) {
-        Prompt request = new Prompt(List.of(
-                new SystemMessage(prompt),
-                new UserMessage(content)
-        ));
         ChatModel chatModel = chatModelFacotry.getChatModelFacotry(chatModelEnum);
         ArticlesByAiPojo articlesByAiPojo = ChatClient.create(chatModel).prompt()
                 .user(content)
