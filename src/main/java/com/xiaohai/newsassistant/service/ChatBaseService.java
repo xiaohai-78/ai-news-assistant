@@ -8,7 +8,7 @@ import com.xiaohai.newsassistant.pojo.ArticlesByAiPojo;
  * @Author: XiaoYunTao
  * @Date: 2024/9/9
  */
-public interface ChatService {
+public interface ChatBaseService {
 
     /**
      * 处理提示词和内容

@@ -1,8 +1,7 @@
 package com.xiaohai.newsassistant.service.factory;
 
 import com.xiaohai.newsassistant.enums.ChatModelEnum;
-import com.xiaohai.newsassistant.service.ChatService;
-import com.xiaohai.newsassistant.service.abstracts.ChatBaseService;
+import com.xiaohai.newsassistant.service.abstracts.ChatService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -16,7 +15,7 @@ import javax.annotation.Resource;
 public class ChatModelServiceFactory {
 
     @Resource
-    private ChatBaseService chatBaseService;
+    private ChatService chatBaseService;
 
     public ChatService getChatModelService(ChatModelEnum chatModelEnum) {
         switch (chatModelEnum) {

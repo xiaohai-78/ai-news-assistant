@@ -1,13 +1,12 @@
 package com.xiaohai.newsassistant.service.abstracts;
 
 import cn.hutool.json.JSONException;
-import cn.hutool.json.JSONObject;
 import com.xiaohai.newsassistant.enums.ChatModelEnum;
 import com.xiaohai.newsassistant.enums.PromptEnum;
 import com.xiaohai.newsassistant.pojo.ArticlesByAiPojo;
-import com.xiaohai.newsassistant.service.factory.ChatModelServiceFactory;
-import com.xiaohai.newsassistant.service.ChatService;
+import com.xiaohai.newsassistant.service.ChatBaseService;
 import com.xiaohai.newsassistant.service.NewsService;
+import com.xiaohai.newsassistant.service.factory.ChatModelServiceFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;

@@ -2,7 +2,7 @@ package com.xiaohai.newsassistant.service.abstracts;
 
 import com.xiaohai.newsassistant.enums.ChatModelEnum;
 import com.xiaohai.newsassistant.pojo.ArticlesByAiPojo;
-import com.xiaohai.newsassistant.service.ChatService;
+import com.xiaohai.newsassistant.service.ChatBaseService;
 import com.xiaohai.newsassistant.service.factory.ChatModelFacotry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class ChatBaseService implements ChatService {
+public class ChatService implements ChatBaseService {
 
     @Resource
     private ChatModelFacotry chatModelFacotry;

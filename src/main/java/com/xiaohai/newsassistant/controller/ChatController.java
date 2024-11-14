@@ -2,15 +2,10 @@ package com.xiaohai.newsassistant.controller;
 
 import com.xiaohai.newsassistant.enums.ChatModelEnum;
 import com.xiaohai.newsassistant.enums.PromptEnum;
-import com.xiaohai.newsassistant.pojo.SinaAiNewsPojo;
 import com.xiaohai.newsassistant.pojo.dto.ChatOllamaDTO;
-import com.xiaohai.newsassistant.service.ChatService;
-import com.xiaohai.newsassistant.service.impl.news.CCTVNewsServiceImpl;
-import com.xiaohai.newsassistant.service.impl.news.SinaNewsServiceImpl;
-import com.xiaohai.newsassistant.utils.DateTimeUtil;
+import com.xiaohai.newsassistant.service.ChatBaseService;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Map;
 /**
  * @Description:
@@ -32,7 +26,7 @@ public class ChatController {
     private final OllamaChatModel ollamaChatClient;
 
     @Resource
-    private ChatService chatService;
+    private ChatBaseService chatService;
 
 //    @Resource
 //    private SinaNewsServiceImpl sinaNewsService;
