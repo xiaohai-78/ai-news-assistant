@@ -49,9 +49,7 @@ public class CCTVNewsServiceImpl extends NewsAbstractService {
             );
             if (abstractElement != null) {
                 String abstractText = abstractElement.html()
-                        .replaceAll("；", "；\n")
                         .replaceAll("：", "：\n");
-//                System.out.println(abstractText);
                 return abstractText;
             } else {
                 System.out.println("abstractElement == null 无法获取新闻简介");

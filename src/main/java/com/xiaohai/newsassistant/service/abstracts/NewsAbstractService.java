@@ -37,14 +37,13 @@ public abstract class NewsAbstractService implements NewsService {
         ChatService chatModelService = chatModelServiceFactory.getChatModelService(chatModelEnum);
         try {
             articlesByAiPojo = chatModelService.processConverterChat(chatModelEnum, PromptEnum.NEWS_ASSISTANT.getPrompt(), originalNews);
-            log.info("ChatResponse: " + articlesByAiPojo.toString());
+//            log.info("ChatResponse: " + articlesByAiPojo.toString());
         } catch (JSONException exception){
             // 生成Json失败了就重新生成，最多试3次
             log.error("生成Json格式错误,第{}次重试", retryTimes + 1);
             articlesByAiPojo = getAiContent(chatModelEnum, originalNews, ++retryTimes);
         } catch (Exception e){
             log.error("ChatsinaAiNewsPojo error", e);
-            throw new RuntimeException(e);
         }
 
         return articlesByAiPojo;

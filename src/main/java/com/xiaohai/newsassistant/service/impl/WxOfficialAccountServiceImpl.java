@@ -65,7 +65,8 @@ public class WxOfficialAccountServiceImpl implements NewsAssistantService {
 
         String everydayEngilsh = getEverydayEngilsh();
 
-        str = str + cctvNews + " <br/> " + " <hr> " + " <br/> " + formatAiNewsContent
+        str = str + generateHtmlFromCCTVNews(cctvNews) + " <hr> " + " <br/> "
+                + formatAiNewsContent
                 + everydayEngilsh;
 
         log.info("str: {}", str);
@@ -83,6 +84,34 @@ public class WxOfficialAccountServiceImpl implements NewsAssistantService {
         String englishSentence = result.getStr("content");
         String chinaSentence = result.getStr("note");
         return  englishSentence + " <br/> " + chinaSentence;
+    }
+
+    public String generateHtmlFromCCTVNews(String dateStr) {
+
+        String[] newsItems = dateStr.split("(?<=；|\\n)");
+
+        // 开始拼接 HTML
+        StringBuilder htmlBuilder = new StringBuilder();
+
+        // 遍历每一条新闻，生成 HTML 列表项
+        for (String newsItem : newsItems) {
+            htmlBuilder.append("<p>").append(escapeHtml(newsItem.trim())).append("</p>");
+        }
+
+        // 返回生成的 HTML 字符串
+        return htmlBuilder.toString();
+    }
+
+    /**
+     * 转义HTML特殊字符（如<、>、&等）
+     */
+    private String escapeHtml(String input) {
+        if (input == null) return "";
+        return input.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#39;");
     }
 
 }
